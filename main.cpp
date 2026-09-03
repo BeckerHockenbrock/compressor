@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "huffman.cpp"
+#include "huffman/huffman.cpp"
 
 using namespace std;
 
