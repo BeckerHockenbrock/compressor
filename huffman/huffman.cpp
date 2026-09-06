@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -48,12 +49,8 @@ public:
     void compress(string filename) {
         map<char, int> charFrequency = getCharFrequency(filename);
         vector<pair<char, int>> sortedFreq = sortMap(charFrequency);
-    
-        for (auto& pair : sortedFreq) {
-            cout << pair.first << " " << pair.second << endl;
-        }
         cout << "\n";
-        HuffmanTree tree = buildHuffmanTree(sortedFreq);
+        HuffmanTree tree(sortedFreq);
         tree.printTree();
     }
 
