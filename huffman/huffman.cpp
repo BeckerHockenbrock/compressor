@@ -47,6 +47,26 @@ public:
     }
 
 
+    string getBitStr(string filename, map<char, string> codes) {
+    
+        string str = "";
+
+        ifstream file(filename);
+        if (!file.is_open()) {
+            cout << "Error opening file" << endl;
+            return "";
+        }
+        
+        string line;
+        while (getline(file, line)) {
+            for (char c : line) {
+                str += codes[c];
+            }
+        }
+        
+        file.close();
+        return str;
+    }
 
 
     
@@ -61,6 +81,10 @@ public:
         for (const auto& pair : codes) {
             cout << "'" << pair.first << "' : " << pair.second << endl;
         }
+
+        string bitString = getBitStr(filename,codes);
+        cout << "\n" << bitString << endl; 
+
     }
 
 
