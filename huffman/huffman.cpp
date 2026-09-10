@@ -45,13 +45,22 @@ public:
 
         return sortedFreq;
     }
+
+
+
+
     
     void compress(string filename) {
         map<char, int> charFrequency = getCharFrequency(filename);
         vector<pair<char, int>> sortedFreq = sortMap(charFrequency);
         cout << "\n";
         HuffmanTree tree(sortedFreq);
-        tree.printTree();
+        map<char, string> codes = tree.getCodes();
+
+        cout << "\n--- Huffman Codes ---\n";
+        for (const auto& pair : codes) {
+            cout << "'" << pair.first << "' : " << pair.second << endl;
+        }
     }
 
 

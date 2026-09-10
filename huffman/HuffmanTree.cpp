@@ -1,6 +1,7 @@
 #pragma once
 #include "HuffmanNode.cpp"
 #include <iostream>
+#include <map>
 #include <vector>
 #include <queue>
 
@@ -68,4 +69,29 @@ class HuffmanTree{
             this->root = minHeap.top();
         }
     }
+
+     void generateCodes(HuffmanNode* node, string code, map<char, string>& huffmanCodes) {
+        if (node == nullptr) {
+            return;
+        }
+    
+        // 1. Check if this is a leaf node (both left and right are nullptr)
+        if (node->getLeft() == nullptr && node->getRight() == nullptr) {
+            huffmanCodes[node->getChar()] = code;
+            return;
+        }
+    
+        // 2. Recurse left with '0'
+        generateCodes(node->getLeft(), code + "0", huffmanCodes);
+    
+        // 3. Recurse right with '1'
+        generateCodes(node->getRight(), code + "1", huffmanCodes);
+    }
+
+    map<char, string> getCodes() {
+        map<char, string> huffmanCodes;
+        generateCodes(root, "", huffmanCodes);
+        return huffmanCodes;
+    }
+
 };
