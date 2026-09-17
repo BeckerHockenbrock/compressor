@@ -5,6 +5,7 @@
 #include <map>
 #include <vector>
 #include <algorithm>
+#include <cstdint>
 
 #include "HuffmanTree.cpp"
 
@@ -46,6 +47,29 @@ public:
         return sortedFreq;
     }
 
+    vector<uint8_t> packBits(const string& bitString, int& padding) {
+        vector<uint8_t> bytes;
+        uint8_t currentByte = 0;
+        int bitCount = 0;
+        for (char bit : bitString) {
+            currentByte = (currentByte << 1) | (bit == '1' ? 1 : 0);
+            bitCount++;
+            if (bitCount == 8) {
+                bytes.push_back(currentByte);
+                currentByte = 0;
+                bitCount = 0;
+            }
+        }
+
+        if (bitCount > 0) {
+            padding = 8 - bitCount;
+            currentByte <<= padding;
+            bytes.push_back(currentByte);
+        } else {
+            padding = 0;
+        }
+        return bytes;
+    }
 
     string getBitStr(string filename, map<char, string> codes) {
     
@@ -83,7 +107,13 @@ public:
         }
 
         string bitString = getBitStr(filename,codes);
-        cout << "\n" << bitString << endl; 
+
+        int padding = 0;
+        vector<uint8_t> bitArray = packBits(bitString, padding);
+
+        cout << "Packed into: " << bitArray.size() << " bytes! (Padding: " << padding << " bits)\n";
+
+
 
     }
 
